@@ -9,18 +9,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Rectangle();
+    return const Space();
   }
 }
 
-class Rectangle extends StatelessWidget {
-
-  const Rectangle({Key? key}) : super(key: key);
+class Space extends StatelessWidget {
+  const Space({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-        child: Container(color: Colors.black12, width: 300, height: 300),
-      );
+    return Expanded(
+      child: Container(
+          color: Colors.black12,
+          child: CustomPaint(
+            painter: RectanglePainter(),
+          )
+      ),
+    );
   }
+}
+
+class RectanglePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+        ..color = Colors.lime
+        ..strokeWidth = 1
+        ..style = PaintingStyle.fill;
+
+    final rect = Rect.fromPoints(
+      Offset(size.width * 1/4, size.height *1/4),
+      Offset(size.width * 3/4, size.height *3/4));
+    canvas.drawRect(rect, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
