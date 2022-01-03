@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -47,17 +48,24 @@ class RectanglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.lime
+      ..color = randomColor()
       ..strokeWidth = 1
       ..style = PaintingStyle.fill;
 
-    // final rect2 = Rect.fr
     final rect = Rect.fromPoints(
-        Offset(size.width * 1 / 4, size.height * 1 / 4),
-        Offset(size.width * 3 / 4, size.height * 3 / 4));
+        const Offset(0, 0),
+        Offset(size.width * 1 / 4, size.height * 1 / 4));
     canvas.drawRect(rect, paint);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+
+  Color randomColor() {
+    return Color.fromRGBO(
+        Random().nextInt(256),
+        Random().nextInt(256),
+        Random().nextInt(256),
+        0.9);
+  }
 }
