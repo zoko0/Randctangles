@@ -47,25 +47,36 @@ class Space extends StatelessWidget {
 class RectanglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = randomColor()
+
+    final paint = randomColorPaint();
+    final rect = Rect.fromPoints(const Offset(0, 0),
+        Offset(size.width, size.height));
+    canvas.drawRect(rect, paint);
+
+    for (var i = 0; i < 20; i++ ) {
+      drawRandomRectangle(canvas, size);
+    }
+  }
+
+  Paint randomColorPaint() {
+    var randomColor = Color.fromRGBO(Random().nextInt(256),
+        Random().nextInt(256), Random().nextInt(256), 0.9);
+
+    return Paint()
+      ..color = randomColor
       ..strokeWidth = 1
       ..style = PaintingStyle.fill;
+  }
 
-    final rect = Rect.fromPoints(
-        const Offset(0, 0),
-        Offset(size.width * 1 / 4, size.height * 1 / 4));
+  void drawRandomRectangle(Canvas canvas, Size size) {
+    var randomSize1 = Random().nextInt(size.width.toInt());
+    var randomSize = Random().nextInt(size.width.toInt());
+    final paint = randomColorPaint();
+    final rect = Rect.fromPoints(Offset(randomSize1.toDouble(), randomSize1.toDouble()),
+        Offset(randomSize.toDouble(), randomSize.toDouble()));
     canvas.drawRect(rect, paint);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-
-  Color randomColor() {
-    return Color.fromRGBO(
-        Random().nextInt(256),
-        Random().nextInt(256),
-        Random().nextInt(256),
-        0.9);
-  }
 }
